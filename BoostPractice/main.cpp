@@ -1,11 +1,14 @@
-﻿// BoostPractice.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
-
-#include <iostream>
-
+﻿#include <iostream>
 int main()
 {
+    // 메모리 누수 감지를 활성화합니다.
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
     std::cout << "Hello World!"<<std::endl;
+
+    int* intArray = new int[100];
+
+    return 0;
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
