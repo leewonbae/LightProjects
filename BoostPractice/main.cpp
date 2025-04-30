@@ -1,4 +1,31 @@
 ﻿#include <iostream>
+class testClass
+{
+public:
+    testClass() {
+        _currentCount = 0;
+        std::cout << "생성자" << std::endl;
+    }
+    ~testClass() {
+        std::cout << "소멸자" << std::endl;
+    }
+    void AddCount() {
+        _currentCount += 1;
+    }
+
+    void Print() {
+        std::cout << _currentCount << std::endl;
+    }
+
+private:
+    int32_t _currentCount;
+    
+
+};
+void TestFunc(std::shared_ptr<testClass> testClassPtr) {
+    testClassPtr->AddCount();
+}
+
 int main()
 {
     // 메모리 누수 감지를 활성화합니다.
@@ -7,17 +34,16 @@ int main()
     std::cout << "Hello World!"<<std::endl;
 
     int* intArray = new int[100];
+    int* testArray = new int[100];
+
+    auto testClassPtr = std::make_shared<testClass>();
+    testClassPtr->AddCount();
+
+    TestFunc(testClassPtr);
+    testClassPtr->Print();
+
 
     return 0;
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
 
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
