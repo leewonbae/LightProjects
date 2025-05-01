@@ -1,4 +1,6 @@
 ﻿#include <iostream>
+#include <boost/asio.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 class testClass
 {
 public:
@@ -28,21 +30,14 @@ void TestFunc(std::shared_ptr<testClass> testClassPtr) {
 
 int main()
 {
-    // 메모리 누수 감지를 활성화합니다.
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
+    
+    boost::asio::io_context io;
+    boost::asio::deadline_timer t(io, boost::posix_time::seconds(5));
+    t.wait();
+   
     std::cout << "Hello World!"<<std::endl;
 
-    int* intArray = new int[100];
-    int* testArray = new int[100];
-
-    auto testClassPtr = std::make_shared<testClass>();
-    testClassPtr->AddCount();
-
-    TestFunc(testClassPtr);
-    testClassPtr->Print();
-
-
+    system("pause");
     return 0;
 }
 
