@@ -1,8 +1,10 @@
 ﻿#include <iostream>
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include "../BoostPracticeCommons/Packet.cpp"
 
 using boost::asio::ip::tcp;
+
 class session : public std::enable_shared_from_this<session>
 {
 public :
@@ -25,6 +27,7 @@ private:
             {
                 if (!ec)
                 {
+                    std::cout <<"data = " << data_ << "length = " << length << std::endl;
                     do_write(length);
                 }
                 else {

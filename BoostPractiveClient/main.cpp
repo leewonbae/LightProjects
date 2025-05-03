@@ -12,6 +12,7 @@
 #include <cstring>
 #include <iostream>
 #include <boost/asio.hpp>
+#include "../BoostPracticeCommons/Packet.cpp"
 
 using boost::asio::ip::tcp;
 
@@ -58,4 +59,19 @@ int main(int argc, char* argv[])
     }
 
     return 0;
+}
+class MessagePacket {
+public :
+    std::string Message;
+    
+};
+BasePacket CreateBasePacket(const char* msg) {
+    auto basePacket = std::make_shared<BasePacket>();
+    basePacket->SetProtocol(commons::C_TO_S_MESSAGE);
+    
+    auto messagePacket = std::make_shared<MessagePacket>();
+    messagePacket->Message = msg;
+
+    json()
+    basePacket->SetPacket()
 }
