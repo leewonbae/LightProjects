@@ -12,7 +12,7 @@
 #include <cstring>
 #include <iostream>
 #include <boost/asio.hpp>
-#include "../BoostPracticeCommons/Packet.cpp"
+#include "../BoostPracticeCommons/Packet.h"
 
 using boost::asio::ip::tcp;
 
@@ -35,9 +35,20 @@ int main(int argc, char* argv[])
         {
             std::cout << "Enter message: ";
             char request[max_length];
-            std::cin.getline(request, max_length);
+            std::string input;
+            std::getline(std::cin, input);
             size_t request_length = std::strlen(request);
-            boost::asio::write(s, boost::asio::buffer(request, request_length));
+
+            //
+            auto packet = PacketFactory::CreatePacket<Packet::ReqMessage>();
+            packet->SetMessage(input);
+            
+            auto basePacket = std::make_shared<Packet::BasePacket>();
+            basePacket->SetProtocol(packet->GetProtocol());
+            basePacket->SetPacketSize(packet->ToJson());
+            
+            //
+            boost::asio::write(s, boost::asio::buffer(input, input.length()));
 
             char reply[max_length];
             size_t reply_length = boost::asio::read(s, boost::asio::buffer(reply, request_length));
@@ -59,19 +70,4 @@ int main(int argc, char* argv[])
     }
 
     return 0;
-}
-class MessagePacket {
-public :
-    std::string Message;
-    
-};
-BasePacket CreateBasePacket(const char* msg) {
-    auto basePacket = std::make_shared<BasePacket>();
-    basePacket->SetProtocol(commons::C_TO_S_MESSAGE);
-    
-    auto messagePacket = std::make_shared<MessagePacket>();
-    messagePacket->Message = msg;
-
-    json()
-    basePacket->SetPacket()
 }
