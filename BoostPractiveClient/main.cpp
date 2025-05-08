@@ -27,40 +27,72 @@ int main(int argc, char* argv[])
 
         boost::asio::io_context io_context;
 
-        tcp::socket s(io_context);
+        tcp::socket socket(io_context);
         tcp::resolver resolver(io_context);
-        boost::asio::connect(s, resolver.resolve("localhost", port));
+        boost::asio::connect(socket, resolver.resolve("localhost", port));
 
         for (;;)
         {
             std::cout << "Enter message: ";
             char request[max_length];
+            size_t offset = 0;
             std::string input;
             std::getline(std::cin, input);
-            size_t request_length = std::strlen(request);
-
             //
-            auto packet = PacketFactory::CreatePacket<Packet::ReqMessage>();
+            auto packet = PacketFactory::CreatePacket<Packet::C2SMessage>();
             packet->SetMessage(input);
-            
-            auto basePacket = std::make_shared<Packet::BasePacket>();
-            basePacket->SetProtocol(packet->GetProtocol());
-            basePacket->SetPacketSize(packet->ToJson());
-            
-            //
-            boost::asio::write(s, boost::asio::buffer(input, input.length()));
+            auto packetJson = packet->ToJson();
 
-            char reply[max_length];
-            size_t reply_length = boost::asio::read(s, boost::asio::buffer(reply, request_length));
+            // protocol
+            uint32_t protocol = static_cast<uint32_t>(packet->GetProtocol());
+            memcpy(request + offset, &protocol, sizeof(uint32_t));
+            offset += sizeof(commons::Protocols);
+            
+            // packetErrorCode
+            uint32_t packetErrorCode = static_cast<uint32_t>(packet->GetPacketErrorCode());
+            memcpy(request + offset, &packetErrorCode, sizeof(uint32_t));
+            offset += sizeof(commons::PacketErrorCode);
+            
+            // bodySize
+            std::string jsonStr = packetJson.dump();
+            uint32_t jsonSize = static_cast<uint32_t>(jsonStr.size());
+            std::cout << "jsonSize = " << jsonSize << std::endl;
+            memcpy(request + offset, &jsonSize, sizeof(uint32_t)); // JSON 길이도 4바이트로 저장
+            offset += sizeof(uint32_t);
+
+            // body
+            memcpy(request+ offset, jsonStr.data(), jsonStr.size());
+            offset += jsonStr.size();
+
+            std::cout << "TotalPacketSize = " << offset << std::endl;
+            boost::asio::write(socket, boost::asio::buffer(request, offset));
+
             std::cout << "Reply is: ";
-            std::cout.write(reply, reply_length);
+            char header[12];
+            size_t header_length = boost::asio::read(socket, boost::asio::buffer(header, 12));
+
+            uint32_t resProtocol;
+            uint32_t resPacketErrorCode;
+            uint32_t resJsonSize;
+
+            memcpy(&resProtocol, header, sizeof(uint32_t));
+            memcpy(&resPacketErrorCode, header+ sizeof(uint32_t), sizeof(uint32_t));
+            memcpy(&resJsonSize, header + sizeof(uint32_t) + sizeof(uint32_t), sizeof(uint32_t));
+            
+            std::cout << "resProtocol -> " << resProtocol << "resPacketErrorCode ->" << resPacketErrorCode << "resJsonSize ->" << resJsonSize << std::endl;
+            
+            char body[max_length];
+            size_t body_length = boost::asio::read(socket, boost::asio::buffer(body, resJsonSize));
+            std::string resJson(body, resJsonSize);
+            std::cout << "resJson " << resJson << std::endl;
+           /* std::cout.write(reply, reply_length);
             std::cout << "\n";
 
             std::string reply_string(reply, reply_length);
             if (exitCommand == reply_string)
             {
                 break;
-            }
+            }*/
 
         }
     }
