@@ -1,11 +1,20 @@
+#pragma once
 #include <cstdint>
 #include <vector>
 #include <string>
 
 #include "Commons.h"
-#include "json.hpp"
+#include "Json.h"
 
 using json = nlohmann::json;
+
+namespace PacketFactory {
+	template<typename T>
+	static std::shared_ptr<T> CreatePacket() {
+		return std::make_shared<T>();
+	}
+}
+
 namespace Packet {
 	class IPacket {
 	public:
@@ -16,6 +25,7 @@ namespace Packet {
 		virtual ~IPacket() = default;
 		commons::Protocols GetProtocol() const { return _protocol; }
 		commons::PacketErrorCode GetPacketErrorCode() const { return _packetErrorCode; };
+		
 		// 직렬화/역직렬화 인터페이스
 		virtual json ToJson() const = 0;
 		virtual void FromJson(const json& j) = 0;
@@ -49,10 +59,4 @@ namespace Packet {
 	private:
 		std::string _message;
 	};
-}
-namespace PacketFactory {
-	template<typename T>
-	static std::unique_ptr<T> CreatePacket() {
-		return std::make_unique<T>();
-	}
 }
