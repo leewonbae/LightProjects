@@ -1,14 +1,17 @@
 ﻿#include <iostream>
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <vector>
 
 using boost::asio::ip::tcp;
 
 class session : public std::enable_shared_from_this<session>
 {
 public :
-    session(tcp::socket socket) : socket_(std::move(socket)) {
-    }
+    explicit session(tcp::socket socket) 
+        : socket_(std::move(socket)),
+        strand_(socket_.get_executor())
+    {}
 
     void start() {
         do_read();
@@ -16,6 +19,7 @@ public :
 
 private:
     tcp::socket socket_;
+    boost::asio::strand<tcp::socket::executor_type> strand_;
     enum { max_length = 1024 };
     char data_[max_length];
 
@@ -26,7 +30,7 @@ private:
             {
                 if (!ec)
                 {
-                    std::cout <<"data = " << data_ << "length = " << length << std::endl;
+                    std::cout <<"[ThreadId]"<<std::this_thread::get_id() << "  [data] = " << data_ << " [length] = " << length << std::endl;
                     do_write(length);
                 }
                 else {
@@ -101,10 +105,24 @@ int main(int argc, char* argv[])
 
     try
     {
+
+        // io_context.run() 가 즉시 종료되지 않도록 work_guard 유지
         boost::asio::io_context io_context;
+        auto work_guard = boost::asio::make_work_guard(io_context);
+
+       
         server s(io_context, std::atoi(port));
 
-        io_context.run();
+        std::vector<std::thread> threads;
+        for (int i = 0; i < 4; ++i) {
+            threads.emplace_back([&io_context]() {
+                io_context.run();
+            });
+        }
+
+        for (auto& thread : threads) {
+            thread.join();
+        }
     }
     catch (std::exception& e)
     {
