@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using pray_server.Databases.DbContexts;
 using pray_server.Handlers;
 using pray_server.Helpers;
+using Serilog;
 
 namespace pray_server
 {
@@ -12,6 +13,11 @@ namespace pray_server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Host.UseSerilog((context, config) =>
+            {
+                config.ReadFrom.Configuration(context.Configuration);
+            });
 
             // dbfactory regist
             builder.Services
