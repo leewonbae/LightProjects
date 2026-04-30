@@ -1,7 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using pray_server.Databases;
+using pray_server.Databases.DbContexts;
 using pray_server.Handlers;
 using pray_server.Helpers;
 
@@ -15,6 +15,10 @@ namespace pray_server
 
             // dbfactory regist
             builder.Services
+                .AddDbContextFactory<AccountDbContext>(options =>
+                    options
+                        .UseSqlServer(builder.Configuration.GetConnectionString("AccountConnection"))
+                        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking))
                 .AddDbContextFactory<GameDbContext>(options =>
                     options
                         .UseSqlServer(builder.Configuration.GetConnectionString("GameConnection"))

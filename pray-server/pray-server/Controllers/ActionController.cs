@@ -4,6 +4,7 @@ using pray_server.Exceptions;
 using pray_server.Handlers;
 using pray_server.Helpers;
 using Snowpipe.Commons.Packets;
+using System.Threading.Tasks;
 
 namespace pray_server.Controllers
 {
@@ -21,8 +22,10 @@ namespace pray_server.Controllers
             _serviceProvider = serviceProvider;
         }
 
+        // 진입점 이기 때문에, ASYNC/AWAIT 패턴을 사용하여 비동기적으로 처리하는 것이 좋습니다.
+        // Microsoft 권장 사항: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?view=aspnetcore-8.0#asynchronous-io
         [HttpPost]
-        public BaseResPacket Index(string packetName, [FromBody] BaseReqPacket packet, bool isJsonTest = false)
+        public async Task<BaseResPacket> Index(string packetName, [FromBody] BaseReqPacket packet, bool isJsonTest = false)
         {
             Response.Headers.Append(RES_HEADER_SERVER_DATETIME, ServerDateTime.Now.ToUniversalTime().ToString("u"));
 
@@ -34,7 +37,7 @@ namespace pray_server.Controllers
                 var handlerWrapperType = ServiceCollectionRegister.GetHandlerWrapper(cleanPacketName);
                 var handlerWrapper = _serviceProvider.GetRequiredService(handlerWrapperType) as IHandlerWrapper;
 
-                var res = handlerWrapper.Execute(packet.PacketBody);
+                var res = await handlerWrapper.ExecuteAsync(packet.PacketBody);
 
                 baseResPacket.PacketBody = JsonConvert.SerializeObject(res);
             }
@@ -52,7 +55,7 @@ namespace pray_server.Controllers
 
         [HttpPost]
         [Route("json")]
-        public BaseResPacket DoJson(string packetName, string jsonBody)
+        public Task<BaseResPacket> DoJsonAsync(string packetName, string jsonBody)
         {
             var baseReqPacket = new BaseReqPacket { PacketBody = jsonBody };
 

@@ -5,7 +5,7 @@ namespace pray_server.Handlers
 {
     public interface IHandlerWrapper
     {
-        Task<IPacket> Execute(string packetBody);
+        Task<IPacket> ExecuteAsync(string packetBody);
     }
 
     public class HandlerWrapper<TReq, TRes> : IHandlerWrapper
@@ -18,7 +18,7 @@ namespace pray_server.Handlers
             _handler = handler;
         }
 
-        public async Task<IPacket> Execute(string packetBody)
+        public async Task<IPacket> ExecuteAsync(string packetBody)
         {
             var req = Newtonsoft.Json.JsonConvert.DeserializeObject<TReq>(packetBody);
             if (req == null)

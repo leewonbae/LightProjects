@@ -7,7 +7,7 @@ namespace Snowpipe.Commons.Packets
     public class ReqRegister : IPacket
     {
         [JsonProperty(Required = Required.Always)]
-        public E_LOGIN_PLATFORM_TYPE PlatformType { get; set; }
+        public E_LOGIN_PLATFORM_TYPE LoginPlatformType { get; set; }
 
         [JsonProperty(Required = Required.Always)]
         public string PlatformToken { get; set; } = "";

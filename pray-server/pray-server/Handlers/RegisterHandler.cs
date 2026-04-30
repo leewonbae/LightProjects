@@ -15,12 +15,6 @@ namespace pray_server.Handlers
             _accountService = serviceProvider.GetRequiredService<AccountService>();
         }
 
-        public ResRegister Execute(ReqRegister packet)
-        {
-            var registerResult = _accountService.RegisterService(packet);
-
-            return new ResRegister();
-        }
 
         Task<ResRegister> IHandler<ReqRegister, ResRegister>.Execute(ReqRegister packet)
         {

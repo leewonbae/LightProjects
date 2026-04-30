@@ -3,16 +3,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>Game</Name>
+    <Name>Account</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{c140551f-240a-4133-8556-1a4ea18795c9}</ProjectGuid>
+    <ProjectGuid>{7dd6247b-abe7-4716-b9f1-67dadb85977d}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>Game</RootNamespace>
-    <AssemblyName>Game</AssemblyName>
+    <RootNamespace>Account</RootNamespace>
+    <AssemblyName>Account</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -61,12 +61,9 @@
     <Folder Include="dbo\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\game_account.sql" />
-    <Build Include="dbo\Stored Procedures\usp_select_game_account.sql" />
-    <Build Include="dbo\Stored Procedures\usp_insert_select_id_game_account.sql" />
-    <Build Include="dbo\Stored Procedures\usp_update_game_account.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="Game.refactorlog" />
+    <Build Include="dbo\Tables\account.sql" />
+    <Build Include="dbo\Tables\account_link.sql" />
+    <Build Include="dbo\Stored Procedures\usp_select_account_link.sql" />
+    <Build Include="dbo\Stored Procedures\usp_insert_account.sql" />
   </ItemGroup>
 </Project>

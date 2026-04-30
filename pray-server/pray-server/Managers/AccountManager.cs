@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using pray_server.Commons;
-using pray_server.Databases;
+using pray_server.Databases.DbContexts;
+using pray_server.Databases.Models.AccountDB;
+using pray_server.Databases.Repositorys;
 using pray_server.Exceptions;
 using pray_server.Extensions;
 using Snowpipe.Commons.Packets;
+using System.Threading.Tasks;
 
 namespace pray_server.Managers
 {
@@ -20,8 +23,6 @@ namespace pray_server.Managers
         private readonly AppleLoginVerifier _appleLoginVerifier;
         private readonly DefaultLoginVerifier _defaultLoginVerifier;
 
-        private IDbContextFactory<GameDbContext> _gameDbContextFactory;
-
         public AccountManager(IServiceProvider serviceProvider)
         {
             _googleLoginVerifier = serviceProvider.GetRequiredService<GoogleLoginVerifier>();
@@ -29,24 +30,18 @@ namespace pray_server.Managers
             _defaultLoginVerifier = serviceProvider.GetRequiredService<DefaultLoginVerifier>();
         }
 
-        public void Register(ReqRegister req)
+
+        public AccountDto CreateEmptyAccount(DateTime serverDt, ReqRegister req)
         {
-            // 플랫폼 별  토큰 확인 
-            var loginToken = GetLoginTokenByPlatformToken(req.PlatformType, req.PlatformToken);
+            var accountKey = Guid.NewGuid().ToString();
 
-            // DB에 로그인 토큰이 존재하는지 확인
-
-            // 신규 계정 생성 
-            // accountDB 에 추가, - 플랫폼 별 정보
-            // gameDB 에 추가 - 계정 별 게임 정보
-
+            return new AccountDto(accountKey, serverDt, req);
         }
 
 
 
 
-
-        private string GetLoginTokenByPlatformToken(E_LOGIN_PLATFORM_TYPE platformType, string platformToken)
+        public string GetLoginTokenByPlatformToken(E_LOGIN_PLATFORM_TYPE platformType, string platformToken)
         {
             if (platformToken.IsNullOrEmpty())
             {
