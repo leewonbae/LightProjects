@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Internal;
 using pray_server.Commons;
 using pray_server.Databases.DbContexts;
-using pray_server.Databases.Repositorys;
 using pray_server.Exceptions;
 using pray_server.Extensions;
 using pray_server.Helpers;
