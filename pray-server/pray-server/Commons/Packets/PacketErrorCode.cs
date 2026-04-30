@@ -14,7 +14,14 @@
         PLATFORM_LOGIN_APPLE_CERT_KEY_ERROR = 16,
         ALREADY_EXISTS_ACCOUNT_LINK = 17,
 
+
         // account
+        NOT_FOUND_ACCOUNT = 1000,
         ALREADY_EXISTS_ACCOUNT = 1001,
+        REGISTER_FAILED = 1002,
+        NEED_TO_LOGIN = 1003,
+        DUPLICATED_LOGIN = 1004,
+        KICKED_TOKEN = 1005,
+        BANNED_TOKEN = 1006,
     }
 }

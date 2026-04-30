@@ -63,7 +63,7 @@
   <ItemGroup>
     <Build Include="dbo\Tables\game_account.sql" />
     <Build Include="dbo\Stored Procedures\usp_select_game_account.sql" />
-    <Build Include="dbo\Stored Procedures\usp_insert_select_id_game_account.sql" />
+    <Build Include="dbo\Stored Procedures\usp_upsert_game_account.sql" />
     <Build Include="dbo\Stored Procedures\usp_update_game_account.sql" />
   </ItemGroup>
   <ItemGroup>

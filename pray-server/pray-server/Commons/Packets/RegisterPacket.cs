@@ -11,7 +11,6 @@ namespace Snowpipe.Commons.Packets
 
         [JsonProperty(Required = Required.Always)]
         public string PlatformToken { get; set; } = "";
-
         [JsonProperty(Required = Required.Always)]
         public string Nickname { get; set; } = "";
     }

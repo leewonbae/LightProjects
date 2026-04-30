@@ -37,9 +37,6 @@ namespace pray_server.Managers
             return new AccountDto(accountKey, serverDt, req);
         }
 
-
-
-
         public string GetLoginTokenByPlatformToken(E_LOGIN_PLATFORM_TYPE platformType, string platformToken)
         {
             if (platformToken.IsNullOrEmpty())

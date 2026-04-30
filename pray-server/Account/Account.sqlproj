@@ -65,5 +65,11 @@
     <Build Include="dbo\Tables\account_link.sql" />
     <Build Include="dbo\Stored Procedures\usp_select_account_link.sql" />
     <Build Include="dbo\Stored Procedures\usp_insert_account.sql" />
+    <Build Include="dbo\Stored Procedures\usp_insert_account_link.sql" />
+    <Build Include="dbo\Stored Procedures\usp_select_account.sql" />
+    <Build Include="dbo\Stored Procedures\usp_update_account.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Account.refactorlog" />
   </ItemGroup>
 </Project>

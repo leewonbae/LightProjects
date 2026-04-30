@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
+using pray_server.Databases.Models.AccountDB;
 using pray_server.Databases.Models.GameDB;
 using System.Threading.Tasks;
 
@@ -13,19 +14,16 @@ namespace pray_server.Databases.DbContexts
         // Define your DbSets here, for example:
         // public DbSet<Player> Players { get; set; }
         //private DbSet<AccountInfoDto> AccountInfoDtoSet { get; set; }
-        public async Task<GameAccountDto?> SelectAccountInfoAsync(long id)
+        public async Task<GameAccountDto?> SelectAccountInfoAsync(long accountId)
         {
-            return await Database.SqlQuery<GameAccountDto>($"EXEC usp_select_account_info {id}").FirstOrDefaultAsync();
+            var list = await Database.SqlQuery<GameAccountDto>($"EXEC usp_select_game_account {accountId}").ToListAsync();
+
+            return list.FirstOrDefault();
         }
 
-        public async Task<long> InsertAccountWithIdAsync(GameAccountDto account)
+        public async Task UpsertGameAccountAsync(GameAccountDto gameAccountDto)
         {
-            return await Database.SqlQuery<long>($"EXEC usp_insert_account_info {account.Nickname}").FirstOrDefaultAsync();
-        }
-
-        public async Task UpdateAccountAsync(GameAccountDto account)
-        {
-            await Database.ExecuteSqlAsync($"EXEC usp_update_account_info {account.Nickname}");
+            await Database.ExecuteSqlAsync($"EXEC usp_upsert_game_account {gameAccountDto.AccountId},{gameAccountDto.Nickname},{gameAccountDto.Level},{gameAccountDto.Exp},{gameAccountDto.LastLoginDt},{gameAccountDto.CreateDt}");
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using pray_server.Extensions;
+using pray_server.Redis.Models;
+using pray_server.Services;
 using Snowpipe.Commons.Packets;
 
 namespace pray_server.Handlers
@@ -6,19 +8,21 @@ namespace pray_server.Handlers
     [InjectableClass(ServiceLifetime.Scoped)]
     public class LoginHandler : IHandler<ReqLogin, ResLogin>
     {
-        public IPacket Execute(string jsonBody)
+        public bool NeedToLogin => false;
+        private readonly AccountService _accountService;
+        public LoginHandler(AccountService accountService)
         {
-            return new ResLogin();
+            _accountService = accountService;
         }
 
-        public Task<ResLogin> Execute(ReqLogin packet)
+        public async Task<ResLogin> Execute(AccountInfoCache accountInfoCache, ReqLogin packet)
         {
-            throw new NotImplementedException();
-        }
+            var result = await _accountService.Login(accountInfoCache, packet);
 
-        public Task<IPacket> ExecuteAsync(string packetBody)
-        {
-            throw new NotImplementedException();
+            return new ResLogin()
+            {
+                GameAccountVo = result.GameAccountDto.ToVo(),
+            };
         }
     }
 }

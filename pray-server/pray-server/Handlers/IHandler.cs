@@ -1,4 +1,5 @@
-﻿using Snowpipe.Commons.Packets;
+﻿using pray_server.Redis.Models;
+using Snowpipe.Commons.Packets;
 
 namespace pray_server.Handlers
 {
@@ -7,6 +8,6 @@ namespace pray_server.Handlers
         where TRes : IPacket
     {
         bool NeedToLogin => true;
-        Task<TRes> Execute(TReq packet);
+        Task<TRes> Execute(AccountInfoCache accountInfoCache, TReq packet);
     }
 }

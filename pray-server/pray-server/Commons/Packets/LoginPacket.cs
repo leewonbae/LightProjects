@@ -7,10 +7,11 @@ namespace Snowpipe.Commons.Packets
     {
         [JsonProperty(Required = Required.Always)]
         public E_LOGIN_PLATFORM_TYPE LoginPlatformType { get; set; }
-        public string LoginPlatformToken { get; set; }
+        public string PlatformToken { get; set; }
     }
 
     public class ResLogin : IPacket
     {
+        public GameAccountVo GameAccountVo { get; set; }
     }
 }
