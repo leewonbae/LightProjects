@@ -1,0 +1,60 @@
+﻿<Window x:Class="PacketTestTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PacketTestTool" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="521" Width="500">
+    <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- 서버 설정: 내용만큼만 차지 -->
+            <RowDefinition Height="Auto"/>
+            <!-- 패킷 입력: 남은 공간의 절반 -->
+            <RowDefinition Height="1*"/>
+            <!-- 응답 확인: 남은 공간의 절반 -->
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="Base Server Info" Grid.Row="0" Margin="5">
+            <!-- GroupBox 안에 StackPanel을 넣습니다. (끝에 / 빼기) -->
+            <StackPanel Orientation="Vertical" Margin="10,20,10,10">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <TextBlock Text="Server IP: " VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtBaseServerIp" Text="localhost" Width="150" Margin="5,0"/>
+                    <TextBlock Text=" Port: " VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtBaseServerPort" Text="5000" Width="60" Margin="5,0"/>
+                </StackPanel>
+                <TextBlock Text="(모든 API는 이 주소를 기준으로 전송됩니다)" Foreground="Gray" FontSize="11" Margin="10,0,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- 2. 패킷 선택 그룹 -->
+        <GroupBox Header="Packet Selection" Grid.Row="1" Margin="5">
+            <!-- 마찬가지로 GroupBox 안에 넣습니다 -->
+            <StackPanel Orientation="Vertical" Margin="10,20,10,10">
+                <ComboBox x:Name="cbPacketTypes" MinWidth="100"  
+                      SelectionChanged="cbPacketTypes_SelectionChanged">
+                </ComboBox>
+                <StackPanel Orientation="Horizontal">
+                    <!-- ListBox가 너무 작으면 안 보이니 너비와 높이를 적절히 줍니다 -->
+                    <xctk:PropertyGrid x:Name="pgRequest" 
+                               Margin="0,5,0,0"
+                               ShowSearchBox="False" 
+                               ShowSortOptions="False"
+                               AutoGenerateProperties="True"/>
+                </StackPanel>
+                <Button x:Name="btnSendPacket" Content="Send" Click="btnSendPacket_Click" Background="#6651F900"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- 3. 응답 확인 그룹 -->
+        <GroupBox Header="View Response Data" Grid.Row="2" Margin="5">
+            <StackPanel Orientation="Vertical" Margin="10,30,10,10">
+                <StackPanel Orientation="Horizontal">
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+
+</Window>

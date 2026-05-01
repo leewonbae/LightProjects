@@ -11,6 +11,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Game", "..\Game\Game.sqlpro
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Account", "..\Account\Account.sqlproj", "{7DD6247B-ABE7-4716-B9F1-67DADB85977D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacketTestTool", "..\PacketTestTool\PacketTestTool.csproj", "{3701F782-9FF3-4042-84AC-C56DA2F62142}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{7DD6247B-ABE7-4716-B9F1-67DADB85977D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DD6247B-ABE7-4716-B9F1-67DADB85977D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7DD6247B-ABE7-4716-B9F1-67DADB85977D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3701F782-9FF3-4042-84AC-C56DA2F62142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3701F782-9FF3-4042-84AC-C56DA2F62142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3701F782-9FF3-4042-84AC-C56DA2F62142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3701F782-9FF3-4042-84AC-C56DA2F62142}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
