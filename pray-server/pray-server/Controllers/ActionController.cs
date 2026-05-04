@@ -64,7 +64,7 @@ namespace GameServer.Controllers
         }
 
         [HttpPost]
-        [Route("json")]
+        [Route("DoJson")]
         public Task<BaseResPacket> DoJsonAsync(string packetName, string jsonBody)
         {
             var baseReqPacket = new BaseReqPacket { PacketBody = jsonBody };
