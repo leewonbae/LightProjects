@@ -1,9 +1,9 @@
-﻿using pray_server.Exceptions;
-using pray_server.Extensions;
-using pray_server.Handlers;
+﻿using GameServer.Exceptions;
+using GameServer.Extensions;
+using GameServer.Handlers;
 using System.Reflection;
 
-namespace pray_server.Helpers
+namespace GameServer.Helpers
 {
     public static class ServiceCollectionRegister
     {

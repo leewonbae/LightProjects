@@ -1,6 +1,6 @@
 ﻿using Snowpipe.Commons.Packets;
 
-namespace pray_server.Exceptions
+namespace GameServer.Exceptions
 {
     public class GameServerException : Exception
     {

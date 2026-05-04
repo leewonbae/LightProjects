@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GameServer.Databases.Models.AccountDB;
+using GameServer.Databases.Models.GameDB;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
-using pray_server.Databases.Models.AccountDB;
-using pray_server.Databases.Models.GameDB;
 using System.Threading.Tasks;
 
-namespace pray_server.Databases.DbContexts
+namespace GameServer.Databases.DbContexts
 {
     public class GameDbContext : DbContext
     {

@@ -1,9 +1,9 @@
 using Google.Apis.Auth;
-using pray_server.Exceptions;
-using pray_server.Extensions;
+using GameServer.Exceptions;
+using GameServer.Extensions;
 using Snowpipe.Commons.Packets;
 
-namespace pray_server.Managers;
+namespace GameServer.Managers;
 [InjectableClass(ServiceLifetime.Singleton)]
 public class GoogleLoginVerifier : ILoginVerifier
 {

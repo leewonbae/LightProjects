@@ -1,12 +1,12 @@
+using GameServer.Exceptions;
+using GameServer.Handlers;
+using GameServer.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using pray_server.Exceptions;
-using pray_server.Handlers;
-using pray_server.Helpers;
 using Serilog;
 using Snowpipe.Commons.Packets;
 
-namespace pray_server.Controllers
+namespace GameServer.Controllers
 {
     [ApiController]
     [Route("system")]
@@ -14,17 +14,21 @@ namespace pray_server.Controllers
     {
         private readonly IHostEnvironment _hostEnvironment;
         private readonly ILogger<SystemController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public SystemController(IHostEnvironment hostEnvironment, ILogger<SystemController> logger)
+        public SystemController(IHostEnvironment hostEnvironment, ILogger<SystemController> logger, IConfiguration configuration)
         {
             _hostEnvironment = hostEnvironment;
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpGet]
         [Route("get-server-datetime")]
         public DateTime GetServerDateTime()
         {
+            var projectName = _configuration.GetValue<string>("PROJECT_NAME", string.Empty);
+
             _logger.LogInformation("ServerDateTime:" + ServerDateTime.Now);
 
             Response.Headers.Append("server-date", ServerDateTime.Now.ToString("u"));

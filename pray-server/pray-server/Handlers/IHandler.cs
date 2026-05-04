@@ -1,7 +1,7 @@
-﻿using pray_server.Redis.Models;
+﻿using GameServer.Redis.Models;
 using Snowpipe.Commons.Packets;
 
-namespace pray_server.Handlers
+namespace GameServer.Handlers
 {
     public interface IHandler<TReq, TRes>
         where TReq : IPacket

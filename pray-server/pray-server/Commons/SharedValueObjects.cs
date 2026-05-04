@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace pray_server.Commons
+namespace GameServer.Commons
 {
     public class SharedValueObjects
     {

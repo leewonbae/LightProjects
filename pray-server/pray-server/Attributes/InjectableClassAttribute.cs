@@ -1,4 +1,4 @@
-﻿namespace pray_server.Extensions
+﻿namespace GameServer.Extensions
 {
     public class InjectableClassAttribute : Attribute
     {

@@ -1,12 +1,12 @@
 
+using GameServer.Databases.DbContexts;
+using GameServer.Handlers;
+using GameServer.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using pray_server.Databases.DbContexts;
-using pray_server.Handlers;
-using pray_server.Helpers;
 using Serilog;
 
-namespace pray_server
+namespace GameServer
 {
     public class Program
     {

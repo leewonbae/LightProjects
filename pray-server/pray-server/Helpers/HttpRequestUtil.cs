@@ -1,9 +1,9 @@
-using pray_server.Exceptions;
+using GameServer.Exceptions;
 using Snowpipe.Commons.Packets;
 using System.Net;
 using System.Net.Http.Headers;
 
-namespace pray_server.Helpers;
+namespace GameServer.Helpers;
 public class ContentMimeType
 {
     public const string APPLICATION_JSON = "application/json";

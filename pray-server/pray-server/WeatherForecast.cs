@@ -1,4 +1,4 @@
-namespace pray_server
+namespace GameServer
 {
     public class WeatherForecast
     {

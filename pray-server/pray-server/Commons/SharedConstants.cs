@@ -1,4 +1,4 @@
-﻿namespace pray_server.Commons
+﻿namespace GameServer.Commons
 {
     public class SharedConstants
     {

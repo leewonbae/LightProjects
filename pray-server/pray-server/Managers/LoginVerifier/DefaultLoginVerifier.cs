@@ -1,6 +1,6 @@
-using pray_server.Extensions;
+using GameServer.Extensions;
 
-namespace pray_server.Managers;
+namespace GameServer.Managers;
 
 [InjectableClass(ServiceLifetime.Singleton)]
 public class DefaultLoginVerifier : ILoginVerifier

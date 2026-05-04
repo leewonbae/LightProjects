@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
-using pray_server.Commons;
-using pray_server.Databases.Models.AccountDB;
+using GameServer.Commons;
+using GameServer.Databases.Models.AccountDB;
 using Snowpipe.Commons.Packets;
 using System.Threading.Tasks;
 
-namespace pray_server.Databases.DbContexts
+namespace GameServer.Databases.DbContexts
 {
     public class AccountDbContext : DbContext
     {

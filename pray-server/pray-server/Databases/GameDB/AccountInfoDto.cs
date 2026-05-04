@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace pray_server.Databases.GameDB
+namespace GameServer.Databases.GameDB
 {
     [Table("account_info")]
     [PrimaryKey(nameof(Id))]

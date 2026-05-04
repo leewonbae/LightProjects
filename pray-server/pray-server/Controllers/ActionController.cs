@@ -1,15 +1,15 @@
+using GameServer.Commons;
+using GameServer.Exceptions;
+using GameServer.Handlers;
+using GameServer.Helpers;
+using GameServer.Managers;
+using GameServer.Redis.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using pray_server.Commons;
-using pray_server.Exceptions;
-using pray_server.Handlers;
-using pray_server.Helpers;
-using pray_server.Managers;
-using pray_server.Redis.Models;
 using Snowpipe.Commons.Packets;
 using System.Threading.Tasks;
 
-namespace pray_server.Controllers
+namespace GameServer.Controllers
 {
     [ApiController]
     [Route("action")]

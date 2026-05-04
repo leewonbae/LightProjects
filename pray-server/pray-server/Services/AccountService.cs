@@ -1,16 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GameServer.Commons;
+using GameServer.Databases.DbContexts;
+using GameServer.Databases.Models.GameDB;
+using GameServer.Exceptions;
+using GameServer.Extensions;
+using GameServer.Helpers;
+using GameServer.Managers;
+using GameServer.Redis.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
-using pray_server.Commons;
-using pray_server.Databases.DbContexts;
-using pray_server.Databases.Models.GameDB;
-using pray_server.Exceptions;
-using pray_server.Extensions;
-using pray_server.Helpers;
-using pray_server.Managers;
-using pray_server.Redis.Models;
 using Snowpipe.Commons.Packets;
 
-namespace pray_server.Services
+namespace GameServer.Services
 {
     public class LoginResult
     {

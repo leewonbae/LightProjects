@@ -2,7 +2,7 @@ using Jose;
 using Newtonsoft.Json;
 using System.Security.Cryptography;
 
-namespace pray_server.Helpers;
+namespace GameServer.Helpers;
 
 class JWTHeader
 {

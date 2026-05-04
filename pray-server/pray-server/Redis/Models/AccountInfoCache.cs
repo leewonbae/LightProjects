@@ -1,8 +1,8 @@
-﻿using pray_server.Commons;
-using pray_server.Databases.Models.AccountDB;
-using pray_server.Databases.Models.GameDB;
+﻿using GameServer.Commons;
+using GameServer.Databases.Models.AccountDB;
+using GameServer.Databases.Models.GameDB;
 
-namespace pray_server.Redis.Models
+namespace GameServer.Redis.Models
 {
     public class AccountInfoCache
     {

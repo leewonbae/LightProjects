@@ -3,7 +3,7 @@ using Snowpipe.Commons.Packets;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace pray_server.Databases.Models.AccountDB;
+namespace GameServer.Databases.Models.AccountDB;
 
 [Table("account")]
 [PrimaryKey(nameof(Id))]

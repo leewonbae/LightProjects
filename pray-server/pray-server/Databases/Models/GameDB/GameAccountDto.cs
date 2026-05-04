@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using pray_server.Commons;
-using pray_server.Databases.Models.AccountDB;
+using GameServer.Commons;
+using GameServer.Databases.Models.AccountDB;
 using Snowpipe.Commons.Packets;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace pray_server.Databases.Models.GameDB
+namespace GameServer.Databases.Models.GameDB
 {
     [Table("game_account")]
     [PrimaryKey(nameof(AccountId))]

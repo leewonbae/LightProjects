@@ -1,4 +1,4 @@
-﻿namespace pray_server.Helpers;
+﻿namespace GameServer.Helpers;
 
 public static class ServerDateTime
 {

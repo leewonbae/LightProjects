@@ -1,9 +1,9 @@
-﻿using pray_server.Extensions;
-using pray_server.Redis.Models;
-using pray_server.Services;
+﻿using GameServer.Extensions;
+using GameServer.Redis.Models;
+using GameServer.Services;
 using Snowpipe.Commons.Packets;
 
-namespace pray_server.Handlers
+namespace GameServer.Handlers
 {
     [InjectableClass(ServiceLifetime.Scoped)]
     public class LoginHandler : IHandler<ReqLogin, ResLogin>

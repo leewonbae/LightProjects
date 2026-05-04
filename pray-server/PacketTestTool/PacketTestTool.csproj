@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\pray-server\pray-server.csproj" />
+    <ProjectReference Include="..\pray-server\GameServer.csproj" />
   </ItemGroup>
 
 </Project>

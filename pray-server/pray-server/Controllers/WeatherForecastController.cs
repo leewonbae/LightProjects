@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace pray_server.Controllers
+namespace GameServer.Controllers
 {
     [ApiController]
     [Route("[controller]")]

@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using pray_server.Commons;
+using GameServer.Commons;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace pray_server.Databases.Models.AccountDB;
+namespace GameServer.Databases.Models.AccountDB;
 
 [Table("account_link")]
 [PrimaryKey(nameof(LoginToken), nameof(LoginPlatFormType))]

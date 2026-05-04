@@ -1,8 +1,8 @@
-﻿using pray_server.Exceptions;
-using pray_server.Redis.Models;
+﻿using GameServer.Exceptions;
+using GameServer.Redis.Models;
 using Snowpipe.Commons.Packets;
 
-namespace pray_server.Handlers
+namespace GameServer.Handlers
 {
     public interface IHandlerWrapper
     {

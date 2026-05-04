@@ -1,5 +1,5 @@
+using GameServer.Commons;
 using Newtonsoft.Json;
-using pray_server.Commons;
 using Snowpipe.Commons;
 
 namespace Snowpipe.Commons.Packets

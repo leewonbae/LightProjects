@@ -1,14 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GameServer.Commons;
+using GameServer.Databases.DbContexts;
+using GameServer.Databases.Models.AccountDB;
+using GameServer.Exceptions;
+using GameServer.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using pray_server.Commons;
-using pray_server.Databases.DbContexts;
-using pray_server.Databases.Models.AccountDB;
-using pray_server.Exceptions;
-using pray_server.Extensions;
 using Snowpipe.Commons.Packets;
 using System.Threading.Tasks;
 
-namespace pray_server.Managers
+namespace GameServer.Managers
 {
     public interface ILoginVerifier
     {

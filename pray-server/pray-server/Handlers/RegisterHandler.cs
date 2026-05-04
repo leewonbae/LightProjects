@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
-using pray_server.Extensions;
-using pray_server.Managers;
-using pray_server.Redis.Models;
-using pray_server.Services;
+﻿using GameServer.Extensions;
+using GameServer.Managers;
+using GameServer.Redis.Models;
+using GameServer.Services;
+using Newtonsoft.Json;
 using Snowpipe.Commons.Packets;
 
-namespace pray_server.Handlers
+namespace GameServer.Handlers
 {
     [InjectableClass(ServiceLifetime.Scoped)]
     public class RegisterHandler : IHandler<ReqRegister, ResRegister>

@@ -1,12 +1,12 @@
 using Jose;
 using Newtonsoft.Json.Linq;
-using pray_server.Exceptions;
-using pray_server.Extensions;
-using pray_server.Helpers;
+using GameServer.Exceptions;
+using GameServer.Extensions;
+using GameServer.Helpers;
 using Snowpipe.Commons.Packets;
 using System.Security.Cryptography;
 
-namespace pray_server.Managers;
+namespace GameServer.Managers;
 
 [InjectableClass(ServiceLifetime.Singleton)]
 public class AppleLoginVerifier : ILoginVerifier
