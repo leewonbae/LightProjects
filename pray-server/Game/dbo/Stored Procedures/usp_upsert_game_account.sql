@@ -20,6 +20,7 @@ AS
 		BEGIN
 		INSERT INTO dbo.game_account 
 	(
+		[account_id],
 		[nickname],
 		[level],
 		[exp],
@@ -28,11 +29,12 @@ AS
 	)
 	VALUES
 	(
+		@account_id,
 		@nickname,
 		@level,
-		@create_dt,
 		@exp,
-		@last_login_dt
+		@last_login_dt,
+		@create_dt
 	)
 		END
 	

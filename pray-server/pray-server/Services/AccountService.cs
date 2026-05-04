@@ -5,7 +5,7 @@ using GameServer.Exceptions;
 using GameServer.Extensions;
 using GameServer.Helpers;
 using GameServer.Managers;
-using GameServer.Redis.Models;
+using GameServer.Redis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Snowpipe.Commons.Packets;
@@ -22,13 +22,16 @@ namespace GameServer.Services
     public class AccountService
     {
         private readonly AccountManager _accountManager;
+        private readonly RedisManager _redisManager;
         private readonly IDbContextFactory<AccountDbContext> _accountDbContextFactory;
         private readonly IDbContextFactory<GameDbContext> _gameDbContextFactory;
 
-        public AccountService(AccountManager accountManager,
+        public AccountService(AccountManager accountManager, RedisManager redisManager,
             IDbContextFactory<AccountDbContext> accountDbContextFactory, IDbContextFactory<GameDbContext> gameDbContextFactory)
         {
             _accountManager = accountManager;
+            _redisManager = redisManager;
+
             _accountDbContextFactory = accountDbContextFactory;
             _gameDbContextFactory = gameDbContextFactory;
         }
@@ -116,8 +119,13 @@ namespace GameServer.Services
             }
 
             // redis 반영 
-            accountInfoCache.UpdateCacheInfo(accountDto, gameAccountDto);
+            var newAccountInfoCache = new AccountInfoCache();
+            newAccountInfoCache.UpdateCacheInfo(accountDto, gameAccountDto);
+            newAccountInfoCache.SetLoginStatus(E_LOGIN_STATUS_TYPE.LOGINED);
+
             //레디스 매니저 반영
+            await _redisManager.SetAccountInfoCacheAsync(newSessionToken, newAccountInfoCache);
+
             return new LoginResult
             {
                 GameAccountDto = gameAccountDto,

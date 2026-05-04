@@ -1,5 +1,6 @@
 ﻿using GameServer.Exceptions;
-using GameServer.Redis.Models;
+using GameServer.Redis;
+using Serilog;
 using Snowpipe.Commons.Packets;
 
 namespace GameServer.Handlers

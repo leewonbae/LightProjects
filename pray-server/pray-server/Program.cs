@@ -5,6 +5,7 @@ using GameServer.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Serilog;
+using StackExchange.Redis;
 
 namespace GameServer
 {
@@ -31,8 +32,12 @@ namespace GameServer
                         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
             // Add services to the container.
-
             builder.Services.AddControllers();
+
+            var redisConnection = builder.Configuration.GetConnectionString("RedisConneection");
+            builder.Services.AddSingleton<IConnectionMultiplexer>(
+                ConnectionMultiplexer.Connect(redisConnection));
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

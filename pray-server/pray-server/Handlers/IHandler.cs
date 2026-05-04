@@ -1,4 +1,4 @@
-﻿using GameServer.Redis.Models;
+﻿using GameServer.Redis;
 using Snowpipe.Commons.Packets;
 
 namespace GameServer.Handlers

@@ -3,7 +3,7 @@ using GameServer.Exceptions;
 using GameServer.Handlers;
 using GameServer.Helpers;
 using GameServer.Managers;
-using GameServer.Redis.Models;
+using GameServer.Redis;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Snowpipe.Commons.Packets;
@@ -20,11 +20,17 @@ namespace GameServer.Controllers
         private const string REQ_HEADER_REQUEST_TOKEN = "Request-Token";
 
         private readonly AccountManager _accountManager;
+        private readonly RedisManager _redisManager;
         private readonly IServiceProvider _serviceProvider;
-        public ActionController(IServiceProvider serviceProvider, AccountManager accountManager)
+
+        private readonly ILogger _logger;
+        public ActionController(ILogger<ActionController> logger, IServiceProvider serviceProvider, AccountManager accountManager, RedisManager redisManager)
         {
+            _logger = logger;
+
             _serviceProvider = serviceProvider;
 
+            _redisManager = redisManager;
             _accountManager = accountManager;
         }
 
@@ -45,7 +51,12 @@ namespace GameServer.Controllers
                 var handlerWrapper = _serviceProvider.GetRequiredService(handlerWrapperType) as IHandlerWrapper;
 
                 // session token이 필요한 패킷인데, session token이 없는 경우 예외 처리
-                accountInfoCache = VerifySessionTokenAndGetCache(handlerWrapper.NeedToLogin, cleanPacketName);
+                accountInfoCache = await VerifySessionTokenAndGetCache(handlerWrapper.NeedToLogin, cleanPacketName);
+
+                if (handlerWrapper.NeedToLogin && accountInfoCache != null)
+                {
+                    _logger.LogInformation($"[Request] [PacketName] : [{packetName}] [AccountId] : [{accountInfoCache.AccountId}] [Body] : [{packet.PacketBody}]");
+                }
 
                 var res = await handlerWrapper.ExecuteAsync(accountInfoCache, packet.PacketBody);
 
@@ -53,10 +64,12 @@ namespace GameServer.Controllers
             }
             catch (GameServerException gsex)
             {
+                _logger.LogError($"[GameServerException] : {gsex.Message}");
                 baseResPacket.ErrorCode = gsex.ErrorCode;
             }
             catch (Exception ex)
             {
+                _logger.LogError($"[Exception] : {ex.Message}");
                 baseResPacket.ErrorCode = E_PACKET_ERROR_CODE.SERVER_ERROR;
             }
 
@@ -72,7 +85,7 @@ namespace GameServer.Controllers
             return Index(packetName, baseReqPacket, true);
         }
 
-        private AccountInfoCache VerifySessionTokenAndGetCache(bool isNeedToLoginHandler, string packetName)
+        private async Task<AccountInfoCache> VerifySessionTokenAndGetCache(bool isNeedToLoginHandler, string packetName)
         {
             if (!isNeedToLoginHandler)
             {
@@ -85,8 +98,7 @@ namespace GameServer.Controllers
             }
 
             // 레디스에 저장된 정보를 확인 
-            var accountInfoCache = new AccountInfoCache();
-
+            var accountInfoCache = await _redisManager.GetAccountInfoCacheAsync(sessionToken);
             if (accountInfoCache == null || accountInfoCache.LoginStatusType != E_LOGIN_STATUS_TYPE.LOGINED)
             {
                 if (accountInfoCache == null)

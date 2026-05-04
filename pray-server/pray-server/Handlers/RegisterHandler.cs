@@ -1,6 +1,6 @@
 ﻿using GameServer.Extensions;
 using GameServer.Managers;
-using GameServer.Redis.Models;
+using GameServer.Redis;
 using GameServer.Services;
 using Newtonsoft.Json;
 using Snowpipe.Commons.Packets;

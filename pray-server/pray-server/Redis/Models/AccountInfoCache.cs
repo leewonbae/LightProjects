@@ -2,7 +2,7 @@
 using GameServer.Databases.Models.AccountDB;
 using GameServer.Databases.Models.GameDB;
 
-namespace GameServer.Redis.Models
+namespace GameServer.Redis
 {
     public class AccountInfoCache
     {
