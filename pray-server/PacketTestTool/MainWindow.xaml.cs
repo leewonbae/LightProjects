@@ -70,10 +70,12 @@ namespace PacketTestTool
                 MessageBox.Show("패킷 클래스를 찾지 못했습니다.");
             }
 
+            // 빈 오브젝트 미리 추가
             cbPacketTypes.Items.Add(NEED_SELECT_PACKET_TEXT);
             _reqPacketTypeDict.Add(NEED_SELECT_PACKET_TEXT, typeof(object));
             _resPacketTypeDict.Add(NEED_SELECT_PACKET_TEXT, typeof(object));
 
+            // 패킷 이름 별로, req, res 패킷 추가 
             foreach (var handlerType in handlerTypeList)
             {
                 var handlerInterface = handlerType.GetInterfaces().FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IHandler<,>));
@@ -141,11 +143,9 @@ namespace PacketTestTool
             var result = await response.Content.ReadAsStringAsync();
 
             var baseResPacket = JsonConvert.DeserializeObject<BaseResPacket>(result);
-
             if (baseResPacket.ErrorCode == E_PACKET_ERROR_CODE.SUCCESS)
             {
-                var resPacketType = _resPacketTypeDict[_currentPacketName];
-                var resPacket = JsonConvert.DeserializeObject(baseResPacket.PacketBody, resPacketType);
+                var resPacket = JsonConvert.DeserializeObject(baseResPacket.PacketBody, _resPacketTypeDict[_currentPacketName]);
 
                 pgResponse.SelectedObject = resPacket;
             }
@@ -153,18 +153,6 @@ namespace PacketTestTool
             {
                 pgResponse.SelectedObject = baseResPacket;
             }
-
-            //var root = JsonNode.Parse(result);
-
-            //if (root["packetBody"] != null)
-            //{
-            //    var bodyJsonString = root["packetBody"].ToString();
-            //    root["packetBody"] = JsonNode.Parse(bodyJsonString);
-            //}
-
-            //// 3. 들여쓰기 옵션 설정
-            //var options = new JsonSerializerOptions { WriteIndented = true };
-            //txtResponseData.Text = root.ToJsonString(options);
         }
     }
 }

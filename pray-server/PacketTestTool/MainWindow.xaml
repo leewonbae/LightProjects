@@ -50,7 +50,7 @@
                                              ShowSearchBox="False" 
                                              ShowSortOptions="False"
                                              AutoGenerateProperties="True"
-                                             ShowSummary="False"/>
+                                             ShowSummary="False" Height="116" Width="106"/>
                     </StackPanel>
                     <Button x:Name="btnSendPacket" Content="Send" Click="btnSendPacket_Click" Background="#6651F900"/>
                 </StackPanel>
