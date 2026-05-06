@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using GameServer.Commons;
+﻿using GameServer.Commons;
 using GameServer.Databases.Models.AccountDB;
+using Microsoft.EntityFrameworkCore;
 using Snowpipe.Commons.Packets;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -32,6 +32,11 @@ namespace GameServer.Databases.Models.GameDB
             CreateDt = serverDt;
             Exp = 0;
             LastLoginDt = null;
+        }
+
+        public static GameAccountDto CreateDto(AccountDto accountDto, DateTime serverDt)
+        {
+            return new GameAccountDto(accountDto.Id, serverDt, accountDto.Nickname);
         }
 
         public void SetLastLoginDt(DateTime serverDt)

@@ -12,12 +12,12 @@ namespace GameServer.Redis
     }
 
     [InjectableClass(ServiceLifetime.Singleton)]
-    public class RedisManager
+    public class RedisRepository
     {
         private const int DAY_EXPIRE_SECONDS = 86400;
 
         private readonly IConnectionMultiplexer _redis;
-        public RedisManager(IConnectionMultiplexer redis)
+        public RedisRepository(IConnectionMultiplexer redis)
         {
             _redis = redis;
         }

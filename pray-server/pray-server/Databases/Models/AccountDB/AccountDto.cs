@@ -60,4 +60,11 @@ public class AccountDto
     {
         SessionToken = sessionToken;
     }
+
+    public static AccountDto CreateDto(DateTime serverDt, ReqRegister req)
+    {
+        var accountKey = Guid.NewGuid().ToString();
+
+        return new AccountDto(accountKey, serverDt, req);
+    }
 }

@@ -11,6 +11,14 @@ namespace GameServer.Redis
         public GameAccountDto GameAccountDto { get; set; }
         public long AccountId => GameAccountDto?.AccountId ?? 0;
 
+        public static AccountInfoCache CreateCache(AccountDto accountDto, GameAccountDto gameAccountDto, E_LOGIN_STATUS_TYPE loginStatusType)
+        {
+            var newCache = new AccountInfoCache();
+            newCache.UpdateCacheInfo(accountDto, gameAccountDto);
+            newCache.SetLoginStatus(loginStatusType);
+
+            return newCache;
+        }
         public void UpdateCacheInfo(AccountDto accountDto)
         {
             SessionToken = accountDto.SessionToken ?? string.Empty;

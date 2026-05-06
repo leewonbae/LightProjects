@@ -1,6 +1,7 @@
 ﻿using GameServer.Commons;
 using GameServer.Databases.DbContexts;
 using GameServer.Databases.Models.AccountDB;
+using GameServer.Databases.Models.GameDB;
 using GameServer.Exceptions;
 using GameServer.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -29,14 +30,6 @@ namespace GameServer.Managers
             _defaultLoginVerifier = serviceProvider.GetRequiredService<DefaultLoginVerifier>();
         }
 
-
-        public AccountDto CreateEmptyAccount(DateTime serverDt, ReqRegister req)
-        {
-            var accountKey = Guid.NewGuid().ToString();
-
-            return new AccountDto(accountKey, serverDt, req);
-        }
-
         public string GetLoginTokenByPlatformToken(E_LOGIN_PLATFORM_TYPE platformType, string platformToken)
         {
             if (platformToken.IsNullOrEmpty())
@@ -63,5 +56,17 @@ namespace GameServer.Managers
 
             return loginVerifier.VerifyToken(platformToken);
         }
+
+
+        public string UpdateLoginInfo(AccountDto accountDto, GameAccountDto gameAccountDto, DateTime serverDt)
+        {
+            var newSessionToken = Guid.NewGuid().ToString("N");
+
+            accountDto.SetSessionToken(newSessionToken);
+            gameAccountDto.SetLastLoginDt(serverDt);
+
+            return newSessionToken;
+        }
+
     }
 }

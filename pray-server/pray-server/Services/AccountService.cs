@@ -1,5 +1,6 @@
 ﻿using GameServer.Commons;
 using GameServer.Databases.DbContexts;
+using GameServer.Databases.Models.AccountDB;
 using GameServer.Databases.Models.GameDB;
 using GameServer.Exceptions;
 using GameServer.Extensions;
@@ -15,6 +16,7 @@ namespace GameServer.Services
     public class LoginResult
     {
         public GameAccountDto GameAccountDto { get; set; }
+        public string SessionToken { get; set; }
         public List<object> ProductDtoList { get; set; } // 임시로 추가 
     }
 
@@ -22,15 +24,15 @@ namespace GameServer.Services
     public class AccountService
     {
         private readonly AccountManager _accountManager;
-        private readonly RedisManager _redisManager;
+        private readonly RedisRepository _redisRepository;
         private readonly IDbContextFactory<AccountDbContext> _accountDbContextFactory;
         private readonly IDbContextFactory<GameDbContext> _gameDbContextFactory;
 
-        public AccountService(AccountManager accountManager, RedisManager redisManager,
+        public AccountService(AccountManager accountManager, RedisRepository redisRepository,
             IDbContextFactory<AccountDbContext> accountDbContextFactory, IDbContextFactory<GameDbContext> gameDbContextFactory)
         {
             _accountManager = accountManager;
-            _redisManager = redisManager;
+            _redisRepository = redisRepository;
 
             _accountDbContextFactory = accountDbContextFactory;
             _gameDbContextFactory = gameDbContextFactory;
@@ -60,7 +62,7 @@ namespace GameServer.Services
                 throw new GameServerException(E_PACKET_ERROR_CODE.ALREADY_EXISTS_ACCOUNT_LINK, $"Account link already exists for login token [{loginToken}]");
             }
 
-            var newAccountDto = _accountManager.CreateEmptyAccount(serverDt, req);
+            var newAccountDto = AccountDto.CreateDto(serverDt, req);
 
             var accountId = await accountDbContext.InsertAndSelectAccountIdAsync(newAccountDto);
 
@@ -93,50 +95,41 @@ namespace GameServer.Services
                 throw new GameServerException(E_PACKET_ERROR_CODE.NOT_FOUND_ACCOUNT, $"Not Found AccountDto [{loginToken}] [{accountLinkDto.AccountId}]");
             }
 
-            bool isNewUser = false;
-            List<object> productList = null;
+            bool isFisrtLogin = false;
             var gameAccountDto = await gameDbContext.SelectAccountInfoAsync(accountDto.Id);
             if (gameAccountDto == null)
             {
-                //최초 로그인 유저
-                isNewUser = true;
-                gameAccountDto = new GameAccountDto(accountDto.Id, serverDt, accountDto.Nickname);
-                productList = CreateStartProductList();
+                gameAccountDto = GameAccountDto.CreateDto(accountDto, serverDt);
+                isFisrtLogin = true;
             }
 
-            //상태 변경 
-            var newSessionToken = Guid.NewGuid().ToString("N");
+            // oldSession확인
+            if (!isFisrtLogin)
+            {
+                var oldSessionInfo = await _redisRepository.GetAccountInfoCacheAsync(accountDto.SessionToken);
+                if (oldSessionInfo != null)
+                {
+                    oldSessionInfo.SetLoginStatus(E_LOGIN_STATUS_TYPE.DUPLICATED);
+                    await _redisRepository.SetAccountInfoCacheAsync(accountDto.SessionToken, oldSessionInfo);
+                }
+            }
 
-            accountDto.SetSessionToken(newSessionToken);
-            gameAccountDto.SetLastLoginDt(serverDt);
+            var newSessionToken = _accountManager.UpdateLoginInfo(accountDto, gameAccountDto, serverDt);
 
             // db 반영
             await accountDbContext.UpdateAccountAsync(accountDto);
             await gameDbContext.UpsertGameAccountAsync(gameAccountDto);
-            if (isNewUser)
-            {
-                // 재화 추가 
-            }
 
             // redis 반영 
-            var newAccountInfoCache = new AccountInfoCache();
-            newAccountInfoCache.UpdateCacheInfo(accountDto, gameAccountDto);
-            newAccountInfoCache.SetLoginStatus(E_LOGIN_STATUS_TYPE.LOGINED);
-
-            //레디스 매니저 반영
-            await _redisManager.SetAccountInfoCacheAsync(newSessionToken, newAccountInfoCache);
+            var newAccountInfoCache = AccountInfoCache.CreateCache(accountDto, gameAccountDto, E_LOGIN_STATUS_TYPE.LOGINED);
+            await _redisRepository.SetAccountInfoCacheAsync(accountDto.SessionToken, newAccountInfoCache);
 
             return new LoginResult
             {
+                SessionToken = newSessionToken,
                 GameAccountDto = gameAccountDto,
-                ProductDtoList = productList
             };
 
-        }
-
-        private List<object> CreateStartProductList()
-        {
-            return new List<object>();
         }
     }
 }

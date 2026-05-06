@@ -21,6 +21,7 @@ namespace GameServer.Handlers
 
             return new ResLogin()
             {
+                SessionToken = result.SessionToken,
                 GameAccountVo = result.GameAccountDto.ToVo(),
             };
         }

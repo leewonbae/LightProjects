@@ -1,6 +1,8 @@
 ﻿using GameServer.Handlers;
+using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Snowpipe.Commons.Packets;
 using System.CodeDom;
 using System.Net.Http;
@@ -142,16 +144,40 @@ namespace PacketTestTool
 
             var result = await response.Content.ReadAsStringAsync();
 
-            var baseResPacket = JsonConvert.DeserializeObject<BaseResPacket>(result);
-            if (baseResPacket.ErrorCode == E_PACKET_ERROR_CODE.SUCCESS)
-            {
-                var resPacket = JsonConvert.DeserializeObject(baseResPacket.PacketBody, _resPacketTypeDict[_currentPacketName]);
 
-                pgResponse.SelectedObject = resPacket;
-            }
-            else
+
+            try
             {
-                pgResponse.SelectedObject = baseResPacket;
+                // 1. 전체 베이스 패킷을 JObject로 먼저 파싱
+                var root = JObject.Parse(result);
+
+                if (root["errorCode"] != null)
+                {
+                    txtErrorCode.Text = Enum.GetName(typeof(E_PACKET_ERROR_CODE), root["errorCode"].Value<int>());
+                }
+
+                // 2. packetBody가 문자열 형태의 JSON으로 들어가 있다면 실제 JSON 객체로 복원
+                if (root["packetBody"] != null && root["packetBody"].Type == JTokenType.String)
+                {
+                    string bodyStr = root["packetBody"].ToString();
+                    try
+                    {
+                        // 이 단계에서 \u0022나 역슬래시 이스케이프가 완전히 제거된 깨끗한 객체가 됩니다.
+                        root["packetBody"] = JToken.Parse(bodyStr);
+                    }
+                    catch
+                    {
+                        // 만약 packetBody 내부가 JSON 형식이 아니면 파싱하지 않고 원문 그대로 둡니다.
+                    }
+                }
+
+                // 3. Newtonsoft.Json의 Formatting.Indented 옵션으로 이쁘게 줄바꿈하여 출력
+                txtResponseData.Text = root.ToString(Formatting.Indented);
+            }
+            catch (Exception ex)
+            {
+                // 파싱에 실패하면 디버깅을 위해 일단 원문이라도 출력합니다.
+                txtResponseData.Text = $"[Parsing Error]: {ex.Message}\n\n[Raw Data]:\n{result}";
             }
         }
     }

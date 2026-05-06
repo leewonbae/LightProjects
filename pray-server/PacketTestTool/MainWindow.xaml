@@ -50,7 +50,7 @@
                                              ShowSearchBox="False" 
                                              ShowSortOptions="False"
                                              AutoGenerateProperties="True"
-                                             ShowSummary="False" Height="116" Width="106"/>
+                                             ShowSummary="False" Height="116"/>
                     </StackPanel>
                     <Button x:Name="btnSendPacket" Content="Send" Click="btnSendPacket_Click" Background="#6651F900"/>
                 </StackPanel>
@@ -62,14 +62,10 @@
             <StackPanel Grid.Column="1" Margin="10">
                 <!-- 응답 결과 확인 -->
                 <GroupBox Header="Response Data" Grid.Row="0" Margin="5">
-                    <xctk:PropertyGrid x:Name="pgResponse" 
-                                        Margin="0,5,0,0"
-                                        ShowSearchBox="False" 
-                                        ShowSortOptions="False"
-                                        IsReadOnly="True"
-                                        AutoGenerateProperties="True"
-                                        ShowSummary="False"
-                                        />
+                    <StackPanel>
+                        <TextBox x:Name="txtErrorCode" IsReadOnly="True" Margin="0,10,0,10"/>
+                        <TextBox x:Name="txtResponseData" Height="394"/>
+                    </StackPanel>
                 </GroupBox>
             </StackPanel>
         </Grid>
