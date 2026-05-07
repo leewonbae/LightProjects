@@ -1,0 +1,166 @@
+// page.scss
+
+// 검색조건, 검색결과, pagination scss
+
+
+// 검색조건 & 검색결과
+.page-search, .page-result {
+  background-color: var(--dynamic-white) ;
+  padding: 12px 14px;
+  margin: 28px 0 40px;
+  border-radius: 8px;
+  box-shadow: 1px 2px 4px -2px rgba(0,0,0,0.2);
+}
+.page-result {
+  padding: 12px 14px 24px;
+}
+
+// <!-- .panel START -->
+.panel {
+  position: relative;
+
+  .panel-heading {
+    position: absolute;
+    left: -4px;
+    top: -28px;
+    padding: 6px 10px;
+    font-size: .8rem !important;
+    // font-weight: bold;
+    margin-bottom: 4px;
+    color: var(--app-gray-c);
+    background-color: var(--app-midnight-blue);
+    border-radius: 4px;
+  }
+  .panel-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+
+    tbody.table-align {
+      color: var(--dynamic-black);
+      background-color: var(--dynamic-white);
+      border-bottom: 4px solid #eee;
+      border-color: var(--dynamic-table-border);
+      &:nth-child(2n+1) {
+        background-color: var(--dynamic-table-background-2n);
+      }
+      tr {
+          &:nth-child(2n) {
+            background-color: var(--dynamic-table-background-2n);
+          }
+          td {
+            .plus-info {
+              display: inline-block;
+              margin-top: 7px;
+              padding: 5px 10px;
+              font-size: 12px;
+              background: #eee;
+              border-radius: 5px;
+            }
+          }
+      }
+    }
+
+  }
+}
+
+////// <!-- .panel END --> //////////////////////////////////////////
+
+// <!-- 조회결과 START  -->
+.panel {
+  
+  .panel-body { 
+    
+    .listpage-wrapper {
+      .listpage {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: -0.4rem -0.8rem -0.2rem;
+        color: var(--dynamic-black) ;
+        select.list-page-size {
+            color: var(--dynamic-black) ;
+            background-color: var(--dynamic-white);
+        }
+      }
+    }
+
+    .panel-table {
+      overflow-y: hidden;
+      // margin: 16px 0 0;
+      
+      @include tableStyle;
+
+      &::-webkit-scrollbar {
+        height: 6px;
+        background: none;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #a8a8a8;
+        border-radius: 10px;
+      }
+      &::-webkit-scrollbar-track {
+        background: var(--dynamic-login-bg);
+        border-radius: 10px;
+      }
+     
+
+    }
+
+  }
+}
+.panel .panel-body .panel-table .table .table-align td {
+  min-width: 100px;
+}
+////// <!-- 조회결과 END --> ///////////////////////////////////////////
+
+
+// <!-- Vuepagination START  -->
+.VuePagination {
+  display: flex;
+  justify-content: center;
+  padding-left: 0;
+  margin: 20px 0;
+
+  nav {
+
+    ul {
+      li.page-item {
+
+        button {
+        background-color: var(--app-midnight-blue);
+        }
+        
+        .page-link {
+          color: var(--app-logo-color);
+        //   color: var(--dynamic-white) ;
+
+        border-radius: 0 !important;
+          border: 1px solid $app-gray-c;
+          border-color: var(--dynamic-table-border);
+          background-color: var(--dynamic-table-background);
+
+          &:disabled {
+            background-color: var(--dynamic-table-background);
+            color: var(--dynamic-gray);
+          }
+        }
+
+        &.active{
+          .page-link {
+            z-index: 3;
+            color: #fff;
+            background-color: var(--app-main-blue);
+            border-color: var(--app-main-blue);
+          }
+        }
+      }
+    }
+
+
+  }
+
+
+}
+/////////// <!-- Vuepagination END  --> /////////////////////////////////////

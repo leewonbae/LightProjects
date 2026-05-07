@@ -1,0 +1,106 @@
+// datetimepicker - flatpicker //
+.datetime-picker-wrapper {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin: 8px;
+   padding-left: 4px;
+   padding-right: 4px;
+
+   .datetime-picker {
+      flex-grow: 6;
+   }
+   .tilde {
+      margin: 0 16px;
+   }
+   
+}
+
+
+.flatpickr-day{
+   border: 0;
+   border-radius: 100%;
+   &.selected {
+      background: var(--app-main-blue);
+      background-color: var(--app-main-blue);
+      &:hover, &:focus {
+         background: var(--app-main-blue-darken);
+      }
+   }
+}
+
+.flatpickr-current-month {
+   .flatpickr-monthDropdown-months {
+      &:hover, &:focus {
+         // background: lighten(var(--app-main-blue), 60%);
+         background-color: var(--app-light);
+      }
+      .flatpickr-monthDropdown-month{
+         font-size: .9rem;
+      }
+   }
+}
+
+
+.flatpickr-confirm  {
+   cursor: pointer;
+   padding: 4px;
+   margin: 8px;
+   border-radius: 4px;
+   background-color: var(--app-main-blue);
+   color: var(--dynamic-white) ;
+   
+   svg {
+      position: relative;
+      left: -2px;
+      top: -1px;
+      width: 14px;
+      height: 14px;
+      path {
+          fill: var(--dynamic-white) ;
+      }
+   }
+   path {
+      fill: var(--dynamic-white) ;
+      
+   }
+   &:hover, &:focus {
+      background-color: var(--app-main-blue-darken);
+      color: var(--dynamic-white-darken);
+      svg {
+         width: 14px;
+         height: 14px;
+      }
+      path {
+         fill: var(--dynamic-white-darken);
+      }
+   }
+}
+.flatpickr-time input:focus {
+   outline: 0;
+   border: 0;
+   color: var(--app-main-blue);
+}
+
+.flatpickr-time input.flatpickr-hour {
+   font-weight: bold;
+   text-align: center;
+}
+.flatpickr-time input.flatpickr-minute {
+   font-weight: bold;
+   text-align: center;
+}
+
+.flatpickr-time input:hover, .flatpickr-time .flatpickr-am-pm:hover, .flatpickr-time input:focus, .flatpickr-time .flatpickr-am-pm:focus {
+   background-color: lighten(#005792, 67%);
+   &::selection {
+      background-color: lighten(#005792, 60%);
+  }
+}
+.flatpickr-day.inRange, .flatpickr-day.prevMonthDay.inRange, .flatpickr-day.nextMonthDay.inRange, .flatpickr-day.today.inRange, .flatpickr-day.prevMonthDay.today.inRange, .flatpickr-day.nextMonthDay.today.inRange, .flatpickr-day:hover, .flatpickr-day.prevMonthDay:hover, .flatpickr-day.nextMonthDay:hover, .flatpickr-day:focus, .flatpickr-day.prevMonthDay:focus, .flatpickr-day.nextMonthDay:focus {
+   cursor: pointer;
+   outline: 0;
+   background: #e6e6e6;
+   border-color: #e6e6e6;
+}
+

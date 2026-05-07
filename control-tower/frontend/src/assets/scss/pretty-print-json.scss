@@ -1,0 +1,15 @@
+.json-container {
+    font-family: menlo, consolas, monospace;
+    font-size: 0.9rem; 
+    font-style: normal; 
+    font-weight: bold; 
+    line-height: 1.4em; 
+    background-color: white;
+    span {
+        border-left: none !important;
+        &.json-key { color: brown;}
+        &.json-string { color: olive; }
+        &.json-number { color: navy; }
+        &.json-mark { color: black; }
+    }
+}

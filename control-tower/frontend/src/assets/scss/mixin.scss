@@ -1,0 +1,122 @@
+// mixin //
+@mixin tableStyle {
+
+   .table {
+       
+      border-left: 0px;
+      border-right: 0px;
+      border-top: 4px solid #eee;
+      border-bottom: 4px solid #eee;
+      border-left: 0px;
+      border-right: 0px;
+      border-color: var(--dynamic-table-border);
+      text-align: center;
+      border-collapse: collapse;
+      
+      thead {
+         color: var(--dynamic-black);
+        //  background-color: var(--dynamic-table-th);
+         background-color: var(--dynamic-light-gray);
+         tr {
+            th:not(:last-child) {
+               border-right: 2px solid #eee;
+               border-color: var(--dynamic-table-border);
+            }
+         }
+      }
+      tbody {
+         tr {
+            td:not(:last-child) {
+               border-right: 2px solid #eee;
+               border-color: var(--dynamic-table-border);
+            }
+         }
+      }
+      .table-align {
+         // tr {
+            th {
+               // outline: 1px solid $app-midnight-blue-darken-border;
+            }
+
+            td {
+               padding: 20px;
+               // outline: 1px solid $app-midnight-blue-darken-border;
+               .button {
+                  &:not(:last-child) {
+                     margin-right: 10px;
+                  }
+               }
+            }
+         // }
+      }
+
+      
+   }
+}
+@mixin flex-center {
+   display: flex;
+   justify-content: center; 
+   align-items: center;
+}
+@mixin flex-end {
+   display: flex;
+   justify-content: flex-end;
+   align-items: flex-end;
+}
+@mixin justify-space-around {
+   display: flex;
+   justify-content: space-around;
+}
+@mixin justify-center {
+   display: flex;
+   justify-content: center;
+}
+@mixin align-center {
+   display: flex;
+   align-items: center;
+}
+@mixin align-end {
+   display: flex;
+   align-items: flex-end;
+}
+@mixin position-center {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%,-50%);
+}
+@mixin flex-between {
+   display: flex; 
+   justify-content: space-between;
+   align-items: center;
+}
+
+@mixin flex-bottom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-flow: column;
+}
+@mixin icon-name {
+   display: flex;
+   flex-flow: column;
+   justify-content: center;
+   align-items: center;
+   .name {
+      font-size: 0.8rem;
+   }
+}
+
+@mixin section {
+   .section-title {
+      font-size: 1.4rem;
+      color: $app-logo-color;
+      margin: 12px 0;
+   }
+   .section-text {
+      font-size: 0.8rem;
+      line-height: 1.4;
+   }
+}
+
+

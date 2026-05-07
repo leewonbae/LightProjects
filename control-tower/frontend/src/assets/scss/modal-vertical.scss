@@ -1,0 +1,80 @@
+//modal-vertical.scss
+.modal {
+
+   .modals-vertical-body {
+      @include tableStyle;
+      width: 100%;
+      margin: 0.8rem 0 0.2rem;
+      .table {
+         
+         .table-tr {
+            border-top: 2px solid #eee;
+            border-bottom: 2px solid #eee;
+            border-left: 0px;
+            border-right: 0px;
+            border-color: var(--dynamic-table-border);
+            background-color: var(--dynamic-table-background);
+            color: var(--dynamic-black);
+
+            & > th {
+               width: 16%;
+               background-color: var(--dynamic-table-th);
+               color: var(--dynamic-black);
+               font-weight: normal;
+            }
+            td {
+               padding: 10px;
+               select, input {
+                  width: 100%;
+                  border: 2px solid #eee;
+                  border-bottom-color: var(--dynamic-table-border);
+                  border-color: var(--dynamic-table-border);
+                  color: var(--dynamic-black);
+                  &:disabled {
+                    color:var(--dynamic-font-gray);
+                  }
+               }
+            }
+
+            &:nth-child(2n) {
+                background-color: var(--dynamic-table-background-2n);
+                color: var(--dynamic-black);
+                
+            }
+            
+            & tbody {
+                background-color: inherit;
+                border-bottom: 1px solid $app-gray-c;
+                
+                & tr:hover {
+                    background-color: var(--dynamic-light-gray);
+                }
+
+//                 &:not(:last-child){
+//                    border-bottom: 1px solid $app-gray-c;
+//                 }
+            }
+
+
+            .admin-goods-btn {
+               .button {
+                  padding: 10px 0 !important;
+               }
+            }
+
+            .table-depth {
+               tr {
+                  & :not(:first-child) {
+                     border-left: 1px solid #eee;
+                     border-color: var(--dynamic-table-border);
+                  }
+                  
+               }
+            }
+            
+         }
+      }
+   }
+
+
+ }

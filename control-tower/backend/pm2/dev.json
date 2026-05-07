@@ -1,0 +1,15 @@
+{
+	"apps":
+	[
+		{
+			"name": "ta-server-control-tower-backend",
+			"script": "bin/www",
+			"instances": 1,
+			"env": {
+				"PORT": 4000,
+				"NODE_ENV": "development"
+			},
+			"args": "dev"
+		}
+	]
+}

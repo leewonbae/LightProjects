@@ -1,0 +1,99 @@
+// login.scss
+.login-page {
+   height: 100vh;
+}
+.login-container {
+   @include flex-center;
+   width: 100%;
+   height: 100%;
+   background-color: $dynamic-main-background;
+
+   .login-form {
+      @include position-center;
+      margin-top: -32px;
+      background-color: $dynamic-white;
+      padding: 50px 40px 40px;
+      z-index: 9;
+      h3 {
+         font-size: 2rem;
+         text-align: center;
+         margin-bottom: 40px;
+         margin-left: -10px;
+         img {
+            width: 240px;
+            height: 100%;
+         }
+      }
+      form {
+         .input-area {
+            position: relative;
+            width: 400px;
+            margin-top: 46px;
+            height: 42px;
+
+            &:first-child {
+               margin-top: 0;
+            }
+
+            input {
+               width: 100%;
+               padding: 10px;
+               border: none;
+               border-bottom: 1px solid $dynamic-dark-gray;
+               font-size: 1rem;
+               // background-color: $dynamic-white;
+
+               &::placeholder {
+                  color: $dynamic-font-gray;
+               }
+
+               &:focus + label,
+               &:valid + label {
+                  top: -18px;
+                  font-size: 0.8rem;
+                  color: $app-main-blue;
+               }
+            }
+
+            label {
+               position: absolute;
+               left: 4px;
+               top: -12px;
+               font-size: 1rem;
+               font-weight: bold;
+               color: $dynamic-light-gray;
+               transition: all .5s ease;
+
+            }
+
+
+         }
+
+         .button-area {
+            margin-top: 40px;
+
+            button {
+               width: 100%;
+               height: 50px;
+               font-size: 1rem;
+               border: none;
+            }
+         }
+      }
+      .caption {
+         display: none;
+         margin-top: 20px;
+         text-align: center;
+         a {
+            font-size: 1rem;
+            color: $dynamic-dark-gray;
+            text-decoration: none;
+
+            &:hover {
+               text-decoration: underline;
+            }
+         }
+      }
+   }
+
+}

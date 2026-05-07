@@ -1,0 +1,144 @@
+{
+  "local": {
+    "JENKINS": {
+      "id": "admin",
+      "password": "Tkfkdgo1!",
+      "dev_build": {
+        "webhook": "http://192.168.0.20:8080/job/develop-build-deploy/build?token=08eac4e8-8384-471a-93f6-2d217f2b3dd5"
+      },
+      "docker_build": {
+        "webhook": " http://192.168.0.20:8080/generic-webhook-trigger/invoke?token=6deae9d0-b976-4479-b044-a45f964c9fcb"
+      },
+      "db_build": {
+        "webhook": " http://192.168.0.20:8080/generic-webhook-trigger/invoke?token=0f8437b7-736c-4738-afb4-0b093aed193d"
+      },
+      "data_table_deploy": {
+        "webhook": "http://192.168.0.20:8080/generic-webhook-trigger/invoke?token=data-table-deploy"
+      }
+    },
+    "CONTROL_TOWER_DB": {
+      "host": "192.168.0.20",
+      "username": "sa",
+      "password": "Tkfkdgo1!",
+      "database": "control_tower",
+      "dialect": "mysql",
+      "port": 3306,
+      "pool": {
+        "max": 5,
+        "min": 0,
+        "acquire": 30000,
+        "idle": 10000
+      },
+      "operatorsAliases": false,
+      "supports": {
+        "schemas": true
+      },
+      "timezone": "+09:00"
+    },
+    "SYSTEM_DB": {
+      "host": "192.168.0.10",
+      "username": "sa",
+      "password": "snow6AtMpt",
+      "database": "account",
+      "dialect": "mssql",
+      "port": 1433,
+      "pool": {
+        "max": 5,
+        "min": 0,
+        "acquire": 30000,
+        "idle": 10000
+      },
+      "dialectOptions": {
+        "options": {
+          "multipleStatements": true,
+          "useUTC": false
+        }
+      }
+    },
+    "DATA_TABLE_DB": {
+      "host": "192.168.0.10",
+      "username": "sa",
+      "password": "snow6AtMpt",
+      "database": "data_table",
+      "dialect": "mssql",
+      "port": 1433,
+      "pool": {
+        "max": 5,
+        "min": 0,
+        "acquire": 30000,
+        "idle": 10000
+      }
+    }
+  },
+  "dev": {
+    "JENKINS": {
+      "id": "admin",
+      "password": "Tkfkdgo1!",
+      "dev_build": {
+        "webhook": "http://192.168.0.20:8080/job/develop-build-deploy/build?token=08eac4e8-8384-471a-93f6-2d217f2b3dd5"
+      },
+      "docker_build": {
+        "webhook": "http://192.168.0.20:8080/generic-webhook-trigger/invoke?token=6deae9d0-b976-4479-b044-a45f964c9fcb"
+      },
+      "db_build": {
+        "webhook": "http://192.168.0.20:8080/generic-webhook-trigger/invoke?token=0f8437b7-736c-4738-afb4-0b093aed193d"
+      },
+      "data_table_deploy": {
+        "webhook": "http://192.168.0.20:8080/generic-webhook-trigger/invoke?token=data-table-deploy"
+      }
+    },
+    "CONTROL_TOWER_DB": {
+      "host": "192.168.0.20",
+      "username": "sa",
+      "password": "Tkfkdgo1!",
+      "database": "control_tower",
+      "dialect": "mysql",
+      "port": 3306,
+      "pool": {
+        "max": 5,
+        "min": 0,
+        "acquire": 30000,
+        "idle": 10000
+      },
+      "operatorsAliases": false,
+      "supports": {
+        "schemas": true
+      },
+      "timezone": "+09:00"
+    },
+    "SYSTEM_DB": {
+      "host": "192.168.0.10",
+      "username": "sa",
+      "password": "snow6AtMpt",
+      "database": "master",
+      "dialect": "mssql",
+      "port": 1433,
+      "pool": {
+        "max": 5,
+        "min": 0,
+        "acquire": 30000,
+        "idle": 10000
+      },
+      "dialectOptions": {
+        "options": {
+          "multipleStatements": true,
+          "useUTC": false
+        }
+      }
+    },
+    "DATA_TABLE_DB": {
+      "host": "192.168.0.10",
+      "username": "sa",
+      "password": "snow6AtMpt",
+      "database": "data_table",
+      "dialect": "mssql",
+      "port": 1433,
+      "pool": {
+        "max": 5,
+        "min": 0,
+        "acquire": 30000,
+        "idle": 10000
+      }
+    }
+  }
+}
