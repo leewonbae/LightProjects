@@ -4,6 +4,7 @@ using GameServer.Handlers;
 using GameServer.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using pray_server.Hosts;
 using Serilog;
 using StackExchange.Redis;
 
@@ -34,7 +35,7 @@ namespace GameServer
             // Add services to the container.
             builder.Services.AddControllers();
 
-            var redisConnection = builder.Configuration.GetConnectionString("RedisConneection");
+            var redisConnection = builder.Configuration.GetConnectionString("RedisConnection");
             builder.Services.AddSingleton<IConnectionMultiplexer>(
                 ConnectionMultiplexer.Connect(redisConnection));
 
@@ -45,10 +46,17 @@ namespace GameServer
             // manager register
             ServiceCollectionRegister.Register(builder.Services);
 
+            //controltower register
+            if (!builder.Environment.EnvironmentName.StartsWith("alpha")
+                || !builder.Environment.EnvironmentName.StartsWith("live"))
+            {
+                builder.Services.AddHostedService<ServerRegistHost>();
+            }
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment() || builder.Environment.EnvironmentName.StartsWith("dev"))
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();

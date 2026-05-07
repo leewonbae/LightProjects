@@ -24,7 +24,7 @@ namespace GameServer.Controllers
         }
 
         [HttpGet]
-        [Route("get-server-datetime")]
+        [Route("get-server-date-time")]
         public DateTime GetServerDateTime()
         {
             var projectName = _configuration.GetValue<string>("PROJECT_NAME", string.Empty);
@@ -37,7 +37,7 @@ namespace GameServer.Controllers
         }
 
         [HttpPost]
-        [Route("set-server-datetime")]
+        [Route("set-server-date-time")]
         public DateTime SetServerDateTime(string newDateTime)
         {
             if (_hostEnvironment.IsProduction())
