@@ -38,13 +38,13 @@ router.get('/server-dt/:serverName', async (req, res, next) =>{
 
 router.get('/all', async (req, res, next) => {
     const serverList = await activeServerService.getServerList();
-    const dockerList = await dockerImageService.getDockerList();
-    const dbList = await activeServerService.getDbList();
+    //const dockerList = await dockerImageService.getDockerList();
+    //const dbList = await activeServerService.getDbList();
 
     return res.send({
         serverList: serverList,
-        dbList: dbList,
-        dockerList: dockerList
+        //dbList: dbList,
+        //dockerList: dockerList
     });
 });
 router.post('/reset-server-dt', async (req, res, next) => {

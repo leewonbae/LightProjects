@@ -12,8 +12,8 @@
                   <tr>
                     <th>서버이름</th>
                     <th>접속정보</th>
-                    <th>브랜치</th>
-                    <th>DB명</th>
+                    <th>프로젝트 이름</th>
+                    <th>서버 환경 변수</th>
                     <th>상태</th>
                     <th>서버 구동 날짜</th>
                     <th>관리</th>
@@ -23,10 +23,8 @@
                   <tr v-for="server in serverList" :key="server.id">
                     <td>{{ server.name }}</td>
                     <td>{{ server.ip }}:{{ server.port }}</td>
-                    <td>{{ server.branch }}</td>
-                    <td>
-                      {{ server.database }}
-                    </td>
+                    <td>{{ server.project_name }}</td>
+                    <td>{{ server.environment_value }}</td>
                     <td>{{ server.status }}</td>
                     <td><locale-date-time :value="server.reg_dt" /></td>
                     <td>
