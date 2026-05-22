@@ -13,10 +13,10 @@
         PLATFORM_LOGIN_EXPIRATION_TOKEN = 15,
         PLATFORM_LOGIN_APPLE_CERT_KEY_ERROR = 16,
         ALREADY_EXISTS_ACCOUNT_LINK = 17,
-        
+
         // TODO : 기존에 1000 이하로 지정하던 부분이 꼬인듯? 수정 필요
         END_OF_SYSTEM_ERROR = 999,
-        
+
         // account
         NOT_FOUND_ACCOUNT = 1000,
         ALREADY_EXISTS_ACCOUNT = 1001,
@@ -25,5 +25,8 @@
         DUPLICATED_LOGIN = 1004,
         KICKED_TOKEN = 1005,
         BANNED_TOKEN = 1006,
+
+        // battle
+        ALREADY_IN_BATTLE_MATCH = 2000,
     }
 }

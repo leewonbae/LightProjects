@@ -1,4 +1,4 @@
-namespace GameServer
+namespace BattleServer
 {
     public class WeatherForecast
     {

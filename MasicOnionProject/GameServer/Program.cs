@@ -1,65 +1,65 @@
-using GameServer.Helpers;
-using MagicOnion.Serialization.MessagePack;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Serilog;
 
-namespace GameServer
+using BattleServer.Helpers;
+using MagicOnion.Server;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Options;
+using Serilog;
+using Snowpipe.Commons.BattleServerCommons;
+
+namespace BattleServer
 {
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
+
+            // Add services to the container.
             builder.Host.UseSerilog((context, config) =>
             {
                 config.ReadFrom.Configuration(context.Configuration);
             });
 
-            // Add services to the container.
             builder.Services.AddControllers();
-
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+                options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First())
+            );
 
-            //magicOnion 
-
-            builder.Services.AddMagicOnion(options =>
-            {
-                options.MessageSerializer = MessagePackMagicOnionSerializerProvider.Default;
-            });
+            builder.Services.AddMagicOnion();
 
             builder.WebHost.ConfigureKestrel(options =>
             {
-                // REST + Swagger → HTTP/1.1 
-                options.ListenLocalhost(5001, o =>
+                // HTTP 전용
+                options.ListenAnyIP(5102, listenOptions =>
                 {
-                    o.Protocols = HttpProtocols.Http1;
+                    listenOptions.Protocols = HttpProtocols.Http1;
                 });
 
-                // gRPC 전용 → HTTP/2 only
-                options.ListenLocalhost(5002, o =>
+                // gRPC 전용
+                options.ListenAnyIP(5112, listenOptions =>
                 {
-                    o.Protocols = HttpProtocols.Http2;
+                    listenOptions.Protocols = HttpProtocols.Http2;
                 });
+
+
             });
+
+            BattlePacketResistry.Init();
+            ServiceCollectionRegister.Register(builder.Services);
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment() || builder.Environment.EnvironmentName.StartsWith("dev"))
+            if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=action}/{action=Index}/{className}/{packetName}"
-            );
-
+            app.MapControllers();
             app.MapMagicOnionService();
 
             app.Run();
